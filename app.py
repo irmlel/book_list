@@ -17,32 +17,55 @@ def menu():
     user_input = input(USER_CHOICE)
     while user_input != 'q':
         if user_input == 'a':
-            book_name = input('Enter book name: ')
-            book_author = input('Enter book author: ')
-            database.add_book(book_name, book_author)
-            user_input = input(USER_CHOICE)
+            prompt_add_book()
         elif user_input == 'l':
-            database.list_book()
-            user_input = input(USER_CHOICE)
+            list_books()
         elif user_input == 'r':
-            book_name = input('Enter book name: ')
-            database.read_book(book_name)
-            user_input = input(USER_CHOICE)
+            prompt_read_book()
         elif user_input == 'd':
-            book_name = input('Enter book name: ')
-            database.delete_book(book_name)
-            user_input = input(USER_CHOICE)
+            prompt_delete_book()
         elif user_input == 'f':
             database.load_to_file()
-            user_input = input(USER_CHOICE)
         elif user_input == 'o':
             database.read_from_file()
-            user_input = input(USER_CHOICE)
+        else:
+            print("Unknown command. Please try again.")
+        user_input = input(USER_CHOICE)
 
-
-menu()
 
 # def prompt_add_book()  ask for book name and author
+def prompt_add_book():
+    book_name = input('Enter book name: ')
+    book_author = input('Enter book author: ')
+
+    database.add_book(book_name, book_author)
+
+
 # def list_books()  show all the books in our list
+def list_books():
+    books = database.get_books()
+    for book in books:
+        read = 'YES' if book['read'] else 'NO'
+        print(f"{book['name']} by {book['author']}, read: {book[read]}")
+
+
 # def prompt_read_book() ask for book name and change it to "read" in our list
+def prompt_read_book():
+    book_name = input('Enter the book name you just finished reading: ')
+    database.mark_book_as_read()
+
+
 # def prompt_delete_book() ask for book name and remove book from list
+def prompt_delete_book():
+    book_name = input('Enter the name of book you want to delete: ')
+
+    database.delete_book(book_name)
+
+
+# Run program
+menu()
+
+
+
+
+

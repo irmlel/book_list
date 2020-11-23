@@ -15,13 +15,12 @@ def add_book(name, author):
 
 
 # Show book list
-def list_book():
-    for book in books:
-        print(f"Book name: {book['name']}      Book author: {book['author']}     Book read: {book['read']}")
+def get_books():
+    return books
 
 
 # If book is read
-def read_book(name):
+def mark_book_as_read(name):
     for book in books:
         if book['name'] == name:
             book['read'] = True
@@ -29,9 +28,10 @@ def read_book(name):
 
 # Delete book
 def delete_book(name):
-    for book in books:
-        if book['name'] == name:
-            books.remove(book)
+    global books
+
+    # add each book to the new list if book['name'] != # name
+    books = [book for book in books if book['name'] != name]
 
 
 # Load list to file

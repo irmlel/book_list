@@ -14,6 +14,7 @@ Your choice:"""
 
 
 def menu():
+    database.create_book_table()
     user_input = input(USER_CHOICE)
     while user_input != 'q':
         if user_input == 'a':
@@ -24,10 +25,6 @@ def menu():
             prompt_read_book()
         elif user_input == 'd':
             prompt_delete_book()
-        elif user_input == 'f':
-            database.load_to_file()
-        elif user_input == 'o':
-            database.read_from_file()
         else:
             print("Unknown command. Please try again.")
         user_input = input(USER_CHOICE)
@@ -45,14 +42,14 @@ def prompt_add_book():
 def list_books():
     books = database.get_books()
     for book in books:
-        read = 'YES' if book['read'] else 'NO'
-        print(f"{book['name']} by {book['author']}, read: {book[read]}")
+        read = 'YES' if book['read'] == '1' else 'NO'
+        print(f"{book['name']} by {book['author']}, read: {read}")
 
 
 # def prompt_read_book() ask for book name and change it to "read" in our list
 def prompt_read_book():
     book_name = input('Enter the book name you just finished reading: ')
-    database.mark_book_as_read()
+    database.mark_book_as_read(book_name)
 
 
 # def prompt_delete_book() ask for book name and remove book from list
